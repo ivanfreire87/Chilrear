@@ -96,7 +96,6 @@ public class ServerUserThread extends Thread{
 				break;
 			}
 		}
-			
         }
 		
 	public void registerClient(String name, String password){
