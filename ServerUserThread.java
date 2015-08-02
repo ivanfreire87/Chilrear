@@ -32,7 +32,7 @@ public class ServerUserThread extends Thread{
 		
 		String clientSentence = null;
 		
-		while(true) { 
+		while(true){ 
 			try{					
 				inFromClient = new BufferedReader(new InputStreamReader(threadConnectionSocket.getInputStream())); 
 				outToClient = new DataOutputStream(threadConnectionSocket.getOutputStream());				
@@ -41,7 +41,7 @@ public class ServerUserThread extends Thread{
 				System.out.println("Server (user thread - port: " + threadConnectionSocket.getPort() + ") Error: " + e.getMessage());
 				break;
 			}
-			try {
+			try{
 				clientRequest = inFromClient.readLine().split(" ");
 				System.out.println("New " + clientRequest[0] + " request (port: " + threadConnectionSocket.getPort() + ").");
 				
@@ -49,45 +49,44 @@ public class ServerUserThread extends Thread{
 				System.out.println("In from client (port: " + threadConnectionSocket.getPort() + ") error: " + e.getMessage());
 				break;
 			}
-
 			try{
 				switch(clientRequest[0]){
 					case "register":		
-											if(clientRequest.length < 3)
-												sendResponse("Missing name or password");
-											else
-												registerClient(clientRequest[1],clientRequest[2]);
-											break;		
+									if(clientRequest.length < 3)
+										sendResponse("Missing name or password");
+									else
+										registerClient(clientRequest[1],clientRequest[2]);
+									break;		
 						
 					case "login":			if(clientRequest.length < 3)
-												sendResponse("Missing name or password");
-											else
-												loginClient(clientRequest[1],clientRequest[2]);
-											break;					
+										sendResponse("Missing name or password");
+									else
+										loginClient(clientRequest[1],clientRequest[2]);
+									break;					
 						
 
 					case "interest":		if(clientRequest.length < 2)
-												sendResponse("Missing name");
-											else	
-												interestInUser(clientRequest[1]);
-											break;
+										sendResponse("Missing name");
+									else	
+										interestInUser(clientRequest[1]);
+									break;
 						
 					case "post":			if(clientRequest.length < 2)
-												sendResponse("Missing message");
-											else{
-												String message="";
-												for(int i = 1; i < clientRequest.length; i++){
-													if(i == clientRequest.length-1)
-														message = message.concat(clientRequest[i]);
-													else
-														message = message.concat(clientRequest[i] + " ");
-												}
-												post(message);
-											}
-											break;				
+										sendResponse("Missing message");
+									else{
+										String message="";
+										for(int i = 1; i < clientRequest.length; i++){
+											if(i == clientRequest.length-1)
+												message = message.concat(clientRequest[i]);
+											else
+												message = message.concat(clientRequest[i] + " ");
+										}
+										post(message);
+									}
+									break;				
 						
 					case "exit":			clientExit();
-											return;
+									return;
 											
 				}					
 			}catch(NullPointerException e){
@@ -98,7 +97,7 @@ public class ServerUserThread extends Thread{
 			}
 		}
 			
-    }
+        }
 		
 	public void registerClient(String name, String password){
 		if(userExists(name))
